@@ -4,23 +4,29 @@ project (cexamples)
 set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..) # only used for cexamples!
 find_package(OpenRAVE REQUIRED)
 
+set(OpenBLAS_DIR /opt/OpenBLAS/lib/cmake/openblas)
+find_package(OpenBLAS REQUIRED)
+set(OpenBLAS_LIBRARY_DIRS /opt/OpenBLAS/lib)
+set(OpenBLAS_LIBRARIES /opt/OpenBLAS/lib/libopenblas.so)
+
 if( CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX )
   add_definitions("-fno-strict-aliasing -Wall")
 endif( CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX )
 
-include_directories(${OpenRAVE_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
+include_directories(${OpenRAVE_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} ${OpenBLAS_INCLUDE_DIRS} )
 link_directories(${OpenRAVE_LIBRARY_DIRS})
 
 message(STATUS "lib ${OpenRAVE_CORE_C_LIBRARIES}")
 
 macro(build_openrave_executable name)
-  add_executable(${name} ${name}.cpp)
+  add_executable(${name}   ${name}.c)
   set_target_properties(${name} PROPERTIES COMPILE_FLAGS "${OpenRAVE_CXX_FLAGS} -DOPENRAVE_C_DLL -DOPENRAVE_C_CORE_DLL")
   set_target_properties(${name} PROPERTIES LINK_FLAGS "${OpenRAVE_LINK_FLAGS}")
-  target_link_libraries(${name} ${OpenRAVE_CORE_C_LIBRARIES})
+  target_link_libraries(${name} ${OpenRAVE_CORE_C_LIBRARIES} ${OpenBLAS_LIBRARIES})
   install(TARGETS ${name} DESTINATION . )
 endmacro(build_openrave_executable)
 
-build_openrave_executable(orc_bodyfunctions)
-build_openrave_executable(orc_customgeometry)
-build_openrave_executable(orc_rrtplanning)
+#build_openrave_executable(orc_bodyfunctions)
+#build_openrave_executable(orc_customgeometry)
+#build_openrave_executable(orc_rrtplanning)
+build_openrave_executable(jacobianTimeC)

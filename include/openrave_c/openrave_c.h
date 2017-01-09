@@ -65,7 +65,7 @@ enum DebugLevel {
 OPENRAVE_C_API void ORCSetDebugLevel(int level);
 
 /// \brief Calls \ref RaveInitialize
-OPENRAVE_C_API void ORCInitialize(bool bLoadAllPlugins=true, int level=Level_Info);
+OPENRAVE_C_API void ORCInitialize(int bLoadAllPlugins, int level);
 
 /// \brief Calls \ref RaveDestroy
 OPENRAVE_C_API void ORCDestroy();
@@ -89,7 +89,7 @@ OPENRAVE_C_API void ORCTriMeshDestroy(void* trimesh);
 /// \brief Calls \ref EnvironmentBase::Destroy
 OPENRAVE_C_API void ORCEnvironmentDestroy(void* env);
 
-OPENRAVE_C_API bool ORCEnvironmentLoad(void* env, const char* filename);
+OPENRAVE_C_API int ORCEnvironmentLoad(void* env, const char* filename);
 
 /// \brief Calls \ref EnvironmentBase::GetKinBody
 OPENRAVE_C_API void* ORCEnvironmentGetKinBody(void* env, const char* name);
@@ -137,7 +137,7 @@ OPENRAVE_C_API void ORCEnvironmentLock(void* env);
 OPENRAVE_C_API void ORCEnvironmentUnlock(void* env);
 
 /// \brief Starts a viewer thread for the current environment
-OPENRAVE_C_API bool ORCEnvironmentSetViewer(void* env, const char* viewername);
+OPENRAVE_C_API int ORCEnvironmentSetViewer(void* env, const char* viewername);
 
 //@}
 
@@ -177,6 +177,13 @@ OPENRAVE_C_API void ORCBodyGetDOFValues(void* body, OpenRAVEReal* values);
 /// \param[in] values uses this array to set the DOF values.
 OPENRAVE_C_API void ORCBodySetDOFValues(void* body, const OpenRAVEReal* values);
 
+/// \brief Calls \ref KinBody::SetDOFValues
+///
+/// \param[in] values uses this array to calculate AngularJacobian at the DOF values set.
+OPENRAVE_C_API void ORCBodyJacobianAtDOFValues(void* body, const OpenRAVEReal* values, OpenRAVEReal* jacobian);
+
+
+
 /// \brief Calls \ref KinBody::GetLinks
 ///
 /// Have to release each of the link pointers with \ref ORCBodyLinkRelease.
@@ -209,7 +216,7 @@ OPENRAVE_C_API void ORCBodyGetTransformMatrix(void* body, OpenRAVEReal* matrix);
 /// \brief Calls \ref KinBody::InitFromTrimesh
 ///
 /// \param trimesh returned from ORCTriMeshCreate()
-OPENRAVE_C_API bool ORCBodyInitFromTrimesh(void* body, void* trimesh, bool visible);
+OPENRAVE_C_API int ORCBodyInitFromTrimesh(void* body, void* trimesh, int visible);
 
 //@}
 
