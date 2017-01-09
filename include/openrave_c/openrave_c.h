@@ -177,6 +177,13 @@ OPENRAVE_C_API void ORCBodyGetDOFValues(void* body, OpenRAVEReal* values);
 /// \param[in] values uses this array to set the DOF values.
 OPENRAVE_C_API void ORCBodySetDOFValues(void* body, const OpenRAVEReal* values);
 
+/// \brief Calls \ref KinBody::SetDOFValues
+///
+/// \param[in] values uses this array to calculate AngularJacobian at the DOF values set.
+OPENRAVE_C_API void ORCBodyJacobianAtDOFValues(void* body, const OpenRAVEReal* values, OpenRAVEReal* jacobian);
+
+
+
 /// \brief Calls \ref KinBody::GetLinks
 ///
 /// Have to release each of the link pointers with \ref ORCBodyLinkRelease.
