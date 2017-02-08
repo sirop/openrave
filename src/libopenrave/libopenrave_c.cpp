@@ -329,6 +329,19 @@ void ORCBodySetDOFValues(void* body, const dReal* values)
     pbody->SetDOFValues(tempvalues);
 }
 
+void ORCBodyGetAngularJacobianAtDOFValues(void* body, const dReal* values, dReal* jacobian)
+{
+    KinBodyPtr pbody = GetBody(body);
+    std::vector<dReal> tempvalues(7);
+    std::copy(values,values+7, tempvalues.begin());
+    pbody->SetDOFValues(tempvalues);
+    int x[7] = { 0, 1, 2, 3, 4, 5, 6};
+    std::vector<int> varmdofindices(x, x + sizeof x / sizeof x[0]);
+    std::vector<dReal> vjacobian(21);
+    pbody->ComputeJacobianAxisAngle(6, vjacobian, varmdofindices);
+    std::copy(vjacobian.begin(), vjacobian.end(), jacobian);
+}
+
 int ORCBodyGetLinks(void* body, void** links)
 {
     KinBodyPtr pbody = GetBody(body);
