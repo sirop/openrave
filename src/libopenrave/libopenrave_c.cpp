@@ -342,6 +342,17 @@ void ORCBodyJacobianAtDOFValues(void* body, const dReal* values, dReal* jacobian
     std::copy(vjacobian.begin(), vjacobian.end(), jacobian);
 }
 
+void ORCBodyRotationJacobianAtDOFValues(void* robot, const dReal* values, dReal* jacobian)
+{
+    RobotBasePtr probot = GetRobot(robot);
+    std::vector<dReal> tempvalues(5);
+    //tempvalues.resize(pbody->GetDOF());
+    std::copy(values,values+5, tempvalues.begin());
+    probot->SetActiveDOFValues(tempvalues);
+    std::vector<dReal> vjacobian(20);
+    probot->GetActiveManipulator()->CalculateRotationJacobian(vjacobian);
+    std::copy(vjacobian.begin(), vjacobian.end(), jacobian);
+}
 
 int ORCBodyGetLinks(void* body, void** links)
 {
