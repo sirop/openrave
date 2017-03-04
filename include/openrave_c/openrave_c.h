@@ -182,7 +182,8 @@ OPENRAVE_C_API void ORCBodySetDOFValues(void* body, const OpenRAVEReal* values);
 /// \param[in] values uses this array to calculate AngularJacobian at the DOF values set.
 OPENRAVE_C_API void ORCBodyJacobianAtDOFValues(void* body, const OpenRAVEReal* values, OpenRAVEReal* jacobian);
 
-
+/// \param[in] values uses this array to calculate RotationJacobian at the DOF values set for the manipulator
+OPENRAVE_C_API void ORCBodyRotationJacobianAtDOFValues(void* robot, const OpenRAVEReal* values, OpenRAVEReal* jacobian);
 
 /// \brief Calls \ref KinBody::GetLinks
 ///
