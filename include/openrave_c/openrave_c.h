@@ -185,6 +185,9 @@ OPENRAVE_C_API void ORCBodyJacobianAtDOFValues(void* body, const OpenRAVEReal* v
 /// \param[in] values uses this array to calculate RotationJacobian at the DOF values set for the manipulator
 OPENRAVE_C_API void ORCBodyRotationJacobianAtDOFValues(void* robot, const OpenRAVEReal* values, OpenRAVEReal* jacobian);
 
+/// \param[out] quat contains the quaternion of the EE pose
+OPENRAVE_C_API void ORCBodyGetEEQuaternion(void* body, OpenRAVEReal* quat);
+
 /// \brief Calls \ref KinBody::GetLinks
 ///
 /// Have to release each of the link pointers with \ref ORCBodyLinkRelease.
