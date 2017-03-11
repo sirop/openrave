@@ -46,8 +46,8 @@ static int deltaRollB = 0;
 
 
 static double panOffset = 0;
-static double rollOffset = 1.0/180*PI;
-static double tiltOffset = 5.0/180*PI;
+static double rollOffset = -0.2677953/180.0f*PI;
+static double tiltOffset = 5.300267/180.0f*PI;
 
 
 
@@ -58,7 +58,7 @@ static double fperiod = 1.0/2000.0;
 #define MaxTiltVel (133119)  //  Max Tilt command velocity in 0.1Motor counts /sec
 
 #define RollVel (0)  //  Max Roll command velocity in 0.1Motor counts /sec
-#define PanVel (0)  //  Max Pan command velocity in 0.1Motor counts /sec
+#define PanVel (30000)  //  Max Pan command velocity in 0.1Motor counts /sec
 #define TiltVel (0)  //  Max Tilt command velocity in 0.1Motor counts /sec
 
 #define StepScalePan  1.0
@@ -85,7 +85,7 @@ int main(int argc, char ** argv)
 
 
     void* bodyhead = ORCEnvironmentGetKinBody(env, "HeadChassis");
-    OpenRAVEReal values[5] = { 0, 0, 0, 0, 0};
+    OpenRAVEReal values[5] = { rollOffset, tiltOffset, pan, roll, tilt};
     OpenRAVEReal jacobian[20];
     
     int m = M, n = N, nrhs = NRHS, lda = LDA, ldb = LDB, info, rank;

@@ -350,14 +350,16 @@ void ORCBodyRotationJacobianAtDOFValues(void* robot, const dReal* values, dReal*
     std::copy(values,values+5, tempvalues.begin());
     probot->SetActiveDOFValues(tempvalues);
     std::vector<dReal> vjacobian(20);
-    probot->GetActiveManipulator()->CalculateRotationJacobian(vjacobian);
+    RobotBase::ManipulatorPtr manip = probot->GetActiveManipulator();
+    manip->CalculateRotationJacobian(vjacobian);
     std::copy(vjacobian.begin(), vjacobian.end(), jacobian);
 }
 
 void ORCBodyGetEEQuaternion(void *body, OpenRAVEReal* quat)
 {
    KinBodyPtr pbody = GetBody(body);
-   Transform t = (KinBody::LinkPtr(pbody->GetLinks()[5]))->GetTransform();
+   KinBody::LinkPtr EElink = KinBody::LinkPtr(pbody->GetLinks()[5]);
+   Transform t = EElink->GetTransform();
    for(int i = 0; i < 4; ++i) {
         quat[i] = t.rot[i];
     }
