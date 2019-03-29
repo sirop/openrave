@@ -22,7 +22,7 @@ macro(build_openrave_executable name)
   add_executable(${name}   ${name}.c)
   set_target_properties(${name} PROPERTIES COMPILE_FLAGS "${OpenRAVE_CXX_FLAGS} -DOPENRAVE_C_DLL -DOPENRAVE_C_CORE_DLL")
   set_target_properties(${name} PROPERTIES LINK_FLAGS "${OpenRAVE_LINK_FLAGS}")
-  target_link_libraries(${name} ${OpenRAVE_CORE_C_LIBRARIES} ${OpenBLAS_LIBRARIES} m)
+  target_link_libraries(${name} ${OpenRAVE_CORE_C_LIBRARIES} ${OpenBLAS_LIBRARIES} -lm)
   install(TARGETS ${name} DESTINATION . )
 endmacro(build_openrave_executable)
 
